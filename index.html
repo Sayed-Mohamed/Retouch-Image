@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Title -->
+  <title>Retouch Image</title>
+  <!-- Required css file -->
+  <link rel="stylesheet" href="css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+<!-- Custom style -->
+  <style>
+    canvas {
+      margin: auto;
+      background: #ececec;
+      max-width: 100%
+      
+
+    }
+    .can
+    {
+    	width: 100%;
+    	height: 420px;
+    	overflow: auto;
+    }
+
+    .center {
+      margin: 0 auto
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .non-block {
+      display: inline-block;
+    }
+
+    .mx-2 {
+      margin: 0 2rem
+    }
+
+    .mb-2 {
+      margin-bottom: 2rem
+    }
+
+    .mb-4 {
+      margin-bottom: 4rem
+    }
+
+    .my-2 {
+      margin: 2rem 0;
+    }
+
+    .field.has-addons {
+      justify-content: center;
+    }
+
+    #pane-2,
+    #pane-3,#pane-4 {
+      display: none;
+    }
+
+    .carousel-container {
+      transform: translateX(-253.333px) !important;
+    }
+
+    @media screen and (max-width: 768px)
+    {
+    	#pane-1 .is-3
+    	{
+    		margin:0 2.5rem;
+    	}
+    } 
+  </style>
+
+</head>
+
+<body>
+  <nav class="navbar is-link mb-4">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#">
+        <h4 class=" title is-4 has-text-white"> Retouch Image</h4>
+      </a>
+
+      <div class="navbar-burger burger" data-target="navbarhidden-menu" aria-label="menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="navbar-menu" id="navbarhidden-menu">
+
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control">
+              <a class="bd-tw-button button" href="https://sekaa.herokuapp.com" target="_blank">
+                <span class="icon">
+                  <i class="fas fa-link"></i>
+                </span>
+                <span>
+                  My Website
+                </span>
+              </a>
+            </p>
+
+
+            <p class="control">
+              <a class="button is-link" href="https://www.facebook.com/SayedMohamed72" target="_blank">
+                <span class="icon">
+                  <i class="fab fa-facebook-f"></i>
+                </span>
+                <span>Facebook</span>
+              </a>
+            </p>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control">
+              <a class="button is-info" href="https://www.linkedin.com/in/sayedmohamed72" target="_blank">
+                <span class="icon">
+                  <i class="fab fa-linkedin-in"></i>
+                </span>
+                <span>Linkedin</span>
+              </a>
+            </p>
+
+            <p class="control">
+              <a class="button is-light" href="https://github.com/Sayed-Mohamed" target="_blank">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Github</span>
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 center ">
+
+        <div class="file has-name is-right mb-2 is-fullwidth">
+          <label class="file-label">
+            <input class="file-input custom-file-input filter-btn" type="file" id="upload-file">
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Browse
+              </span>
+            </span>
+
+            <span class="file-name">
+              Choose Image
+            </span>
+          </label>
+        </div>
+         <div class="can text-center">
+        <canvas id="canvas" data-caman-hidpi-disabled="true">
+          This text is displayed if your browser does not support HTML5 Canvas.
+        </canvas>
+        </div>
+        <!-- Tab Menu -->
+        <div class="my-2 tabs is-toggle is-toggle-rounded is-centered" id="nav">
+          <ul>
+            <li data-target="pane-1" id="1" class="is-active">
+              <a>
+                <span class="icon is-small">
+                  <i class="fas fa-eye-dropper"></i>
+                </span>
+                <span>Effects</span>
+              </a>
+            </li>
+            <li data-target="pane-2" id="2">
+              <a>
+                <span class="icon is-small">
+                  <i class="fa fa-image"></i>
+                </span>
+                <span>Filters</span>
+              </a>
+            </li>
+            <li data-target="pane-4" id="4">
+              <a>
+                <span class="icon is-small">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </span>
+                <span>Resize&Rotate</span>
+              </a>
+            </li>
+            <li data-target="pane-3" id="3">
+              <a>
+                <span class="icon is-small">
+                  <i class="fas fa-save"></i>
+                </span>
+                <span>Save&Revert</span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+        <!-- ./Tab Menu -->
+
+        <!-- Tab content -->
+        <div class="tab-content">
+
+          <!-- Filters -->
+          <div class="tab-pane" id="pane-1">
+
+            <div class='carousel carousel-animated carousel-animate-slide' data-size="3">
+
+
+              <div class="columns my-2 center carousel-container  is-tablet is-mobile">
+                <div class="column is-3 carousel-item is-active">
+                  <div class="block ">
+                    <div class="field has-addons ">
+                      <p class="control">
+                        <a class="button is-link  filter-btn brightness-remove">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">Brightness</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn brightness-add">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column is-3 carousel-item">
+                  <div class="block ">
+                    <div class="field has-addons ">
+                      <p class="control">
+                        <a class="button is-link filter-btn contrast-remove">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">Contrast</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn contrast-add">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column is-3 carousel-item ">
+                  <div class="block ">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-link filter-btn saturation-remove">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">Saturation</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn saturation-add">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column is-3 carousel-item">
+                  <div class="block ">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-link filter-btn vibrance-remove ">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">Vibrance</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn vibrance-add ">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column is-3 carousel-item">
+                  <div class="block ">
+                    <div class="field has-addons ">
+                      <p class="control">
+                        <a class="button is-link  filter-btn exposure-remove">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">Exposure</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn exposure-add">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column is-3 carousel-item">
+                  <div class="block">
+                    <div class="field has-addons ">
+                      <p class="control">
+                        <a class="button is-link filter-btn hue-remove">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">Hue</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn hue-add">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column is-3 carousel-item">
+                  <div class="block">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-link filter-btn sepia-remove">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">Sepia</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn sepia-add">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column is-3 carousel-item">
+                  <div class="block">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-link filter-btn gamma-remove ">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">Gamma</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn gamma-add ">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <div class="block ">
+                    <div class="field has-addons ">
+                      <p class="control">
+                        <a class="button is-link  filter-btn noise-remove">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">Noise</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn noise-add">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column is-3 carousel-item">
+                  <div class="block">
+                    <div class="field has-addons ">
+                      <p class="control">
+                        <a class="button is-link filter-btn clip-remove">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">Clip</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn clip-add">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column is-3 carousel-item">
+                  <div class="block">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-link filter-btn sharpen-remove">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">Sharpen</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn sharpen-add">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column is-3 carousel-item">
+                  <div class="block">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-link filter-btn stackBlur-remove">-</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-static" title="Disabled button">StackBlur</a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-link filter-btn stackBlur-add ">+</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-navigation text-center">
+                <div class="carousel-nav-left non-block mx-2">
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                </div>
+                <div class="carousel-nav-right non-block mx-2">
+                  <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- ./ Filters -->
+
+
+          <!-- Effects -->
+
+          <div class="tab-pane" id="pane-2">
+
+
+
+            <div class='carousel carousel-animated carousel-animate-slide' data-size="3">
+              <div class="columns my-2 center carousel-container  is-tablet is-mobile">
+                <div class="column is-3 carousel-item is-active">
+                  <button class="filter-btn vintage-add button is-dark is-fullwidth">
+                    Vintage
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn lomo-add button is-dark is-fullwidth">
+                    Lomo
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn clarity-add button is-dark is-fullwidth">
+                    Clarity
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn sincity-add button is-dark is-fullwidth">
+                    Sin City
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn crossprocess-add button is-dark is-fullwidth">
+                    Cross Process
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn pinhole-add button is-dark is-fullwidth">
+                    Pinhole
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn nostalgia-add button is-dark is-fullwidth">
+                    Nostalgia
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn hermajesty-add button is-dark is-fullwidth">
+                    Her Majesty
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn sunrise-add button is-dark is-fullwidth">
+                    Sunrise
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn orangePeel-add button is-dark is-fullwidth">
+                    Orange Peel
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn love-add button is-dark is-fullwidth">
+                    Love
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn grungy-add button is-dark is-fullwidth">
+                    Grungy
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn jarques-add button is-dark is-fullwidth">
+                    Jarques
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn oldBoot-add button is-dark is-fullwidth">
+                    Old Boot
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn glowingSun-add button is-dark is-fullwidth">
+                    Glowing Sun
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn hemingway-add button is-dark is-fullwidth">
+                    Hemingway
+                  </button>
+                </div>
+
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn greyscale-add button is-dark is-fullwidth">
+                    Greyscale
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn invert-add button is-dark is-fullwidth">
+                    Invert
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn oldpaper-add button is-dark is-fullwidth">
+                    Oldpaper
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn pleasant-add button is-dark is-fullwidth">
+                    Pleasant
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn emboss-add button is-dark is-fullwidth">
+                    Emboss
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn tiltShift-add button is-dark is-fullwidth">
+                    TiltShift
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn radialBlur-add button is-dark is-fullwidth">
+                    RadialBlur
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn edgeEnhance-add button is-dark is-fullwidth">
+                    EdgeEnhance
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn posterize-add button is-dark is-fullwidth">
+                    Posterize
+                  </button>
+                </div>
+                <div class="column is-3 carousel-item">
+                  <button class="filter-btn hdr-add button is-dark is-fullwidth">
+                    Hdr
+                  </button>
+                </div>
+
+              </div>
+              <div class="carousel-navigation text-center">
+                <div class="carousel-nav-left non-block mx-2">
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                </div>
+                <div class="carousel-nav-right non-block mx-2">
+                  <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ./ Effects -->
+
+          <!-- Resize&Crop -->
+          <div class="tab-pane" id="pane-4">
+            <div class="columns my-2">
+              <div class="column text-center">
+                
+      <div class="field">
+  <div class="control">
+        <input class="input is-rounded" type="text" value="" placeholder="New Width" id="resize-w">
+      </div>
+    </div>
+    <div class="field">
+  <div class="control">
+        <input class="input is-rounded" type="text" value="" placeholder="New Height" id="resize-h">
+      </div>
+    </div>
+        <a class="button is-link is-rounded " id="resizeBtn">Resize</a>
+    
+              </div>
+              <div class="column text-center">
+                <div class="field">
+  <div class="control">
+        <input class="input is-rounded" type="text" value="0" placeholder="Angle" id="degree">
+        <p class="help is-success"> Degree (90,180,270)</p>
+      </div>
+    </div>
+                <a class="button is-link is-rounded " id="rotateBtn">Rotate</a>
+              </div>
+            </div>
+          </div>
+          <!-- ./Resize&Crop -->
+
+
+          <!-- Save&Revert -->
+          <div class="tab-pane" id="pane-3">
+            <div class="columns my-2">
+              <div class="column ">
+                <button id="download-btn" class="button is-primary is-fullwidth">Download Image</button>
+              </div>
+              <div class="column">
+                <button id="revert-btn" class="filter-btn button is-danger is-fullwidth">Remove Filters</button>
+              </div>
+            </div>
+          </div>
+          <!-- ./ Save&Revert -->
+
+        </div>
+        <!-- ./Tab content -->
+
+      </div>
+      <!-- ./ Column -->
+    </div>
+    <!-- ./ Columns -->
+  </div>
+  <!-- ./ Container -->
+
+
+
+  <script src="js/bulma-carousel.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
